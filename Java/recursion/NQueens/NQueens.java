@@ -2,30 +2,36 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 class NQueens{
-	static final int max=10;
+	static final int max=30;
 	static Integer board[][]=new Integer[max][max];
-	static int continuePrint=1;
+	static boolean continuePrint=true;
+	static boolean isRecursive=true;
 	public static void main(String[] args){
 		try
 		{
 			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 			int n = Integer.parseInt(br.readLine());
-			/*if(n > max || n < 1 || n==2 || n == 3){
-				System.out.println("Not possible");
-				return;
-			}
-			if(n == 1){
-				System.out.println(1);
-				return;
-			}*/
 			initializeBoard();
-			//placeQueens(n);
-			recurseQueens(n,0);
-			if(continuePrint == 1){
-				System.out.println("Not possible");	
-				continuePrint=0;
+			if(isRecursive == false){
+				if(n>10){
+					System.out.println("Please switch to recursive solution as only 10 loops available.");
+				}
+				if(n > max || n < 1 || n==2 || n == 3){
+					System.out.println("Not possible");
+					return;
+				}
+				if(n == 1){
+					System.out.println(1);
+					return;
+				}
+				placeQueens(n);
+			}else{
+				recurseQueens(n,0);
+				if(continuePrint == true){
+					System.out.println("Not possible");	
+					continuePrint=false;
+				}
 			}
-			//printBoard(n);
 		}catch(IOException e){
 		}
 	}
@@ -101,20 +107,20 @@ class NQueens{
 	}
       static void recurseQueens(int n, int row)
 	{
+		if(continuePrint==true){
 		for(int i=0;i<n;i++){
 			resetNRow(row);
 			board[row][i]=1;
 			if(isValidBoard(n)){
 				if(checkNQueen(n)){
-					if(continuePrint==1){
-						printBoard(n);
-						continuePrint=0;
-					}
+					printBoard(n);
+					continuePrint=false;
 				}
 				else if(row<n-1){
 					recurseQueens(n,row+1);
 				}
 			}
+		}
 		}	
 	}
 	static void placeQueens(int n){
