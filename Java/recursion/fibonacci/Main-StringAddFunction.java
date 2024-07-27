@@ -2,10 +2,11 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 class Main{
-    static String add(String num1, String num2){
-        String sum="";
+    long maxOfLong = 1000000000000000000;
+    static Long[] add(Long[] num1, Long[] num2){
+        Long[] sum=new Long[100];
         if(num2.length()>num1.length()){
-            String temp = num1;
+            Long[] temp = num1;
             num1 = num2;
             num2 = temp;
         }
@@ -28,9 +29,9 @@ class Main{
     }
     public static void main(String[] args) throws IOException{
         String str="";
-        String[] fibonacci = new String[5001];
-        fibonacci[0]="0";
-        fibonacci[1]="1";
+        String[] fibonacci = new Long[5001][100];
+        fibonacci[0][99]=0L;
+        fibonacci[1][99]=1L;
         for(int i=2;i<5001;i++){
             fibonacci[i]=add(fibonacci[i-1],fibonacci[i-2]);
         }
